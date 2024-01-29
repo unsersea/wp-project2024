@@ -378,5 +378,3 @@ add_action('admin_enqueue_scripts', 'custom_admin_js');
 // function custom_upgrader() {
     
 // }
-
-?>
