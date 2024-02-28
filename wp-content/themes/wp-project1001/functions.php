@@ -1,15 +1,16 @@
 <?php 
 
-/** remove_admin_topbar function */
-// add_action("wp_head", "remove_admin_topbar");
+/** remove_admin_topbar function (Only Admin) */
+add_action("wp_head", "remove_admin_topbar");
 
-// function remove_admin_topbar() {
-//     show_admin_bar(false);
-// }
-
-if(!current_user_can('manage_options')) {
-    add_filter('show_admin_bar', '__return_false');
+function remove_admin_topbar() {
+    show_admin_bar(false);
 }
+
+/** remove admin_topbar (Only User) */
+// if(!current_user_can('manage_options')) {
+//     add_filter('show_admin_bar', '__return_false');
+// }
 
 $wp_project1001_last_version = get_option("wp_project1001_last_version");
 
@@ -97,29 +98,34 @@ add_action('wp_print_styles', 'google_fonts');
 
 # add action script | link (javascript | css | scss | bootstrap | jquery)
 
+add_action('wp_enqueue_scripts', 'custom_user_css');
+add_action('wp_enqueue_scripts', 'custom_user_js');
+
 ## css
 function custom_user_css() {
+
+    # version style.css theme folder
+    $version = wp_get_theme()->get( 'Version' );
+    
     # cdn boxicons
-    wp_enqueue_style('boxicons', 'https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css', array(), false, 'all');
+    wp_enqueue_style('boxicons-main', 'https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css', array(), '', 'all');
     # swiper css
-    wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css', array(), false, 'all');
+    wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css', array(), '', 'all');
     # bootstrap
-    wp_enqueue_style('bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.css', array(), false, 'all');
+    wp_enqueue_style('bootstrap4-main', 'https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css', array(), '4.0.0', 'all');
+    // wp_enqueue_style('bootstrap4-main', get_template_directory_uri() . '/assets/css/bootstrap.css', array(), '', 'all');
     # style
-    wp_enqueue_style('style', get_template_directory_uri() . '/assets/css/style.css', array(), false, 'all');
+    wp_enqueue_style('style-main', get_template_directory_uri() . '/assets/css/style.css', array(), $version, 'all');
+    # style folder setup
+    wp_enqueue_style('style-main-theme', get_template_directory_uri() . '/style.css', array( 'bootstrap4-main' ), $version, 'all');
 }
 
 ## javascript
 function custom_user_js() {
     # jquery
-    wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.2.1.min.js', array(), false, true);
+    wp_enqueue_script('jquery-main', 'https://code.jquery.com/jquery-3.2.1.min.js', array(), '3.2.1', true);
     # swiper js
     wp_enqueue_script('swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js', array(), false, true);
     # app
     wp_enqueue_script('app', get_template_directory_uri() . '/assets/js/App.js', array('jquery'), "v1.0", true);
 }
-
-add_action('admin_enqueue_scripts', 'custom_user_css');
-add_action('admin_enqueue_scripts', 'custom_user_js');
-
-?>

@@ -215,136 +215,136 @@ function add_menu_page_bill() {
 }
 
 # add action sidebar menu
-add_action('admin_menu', '');
-add_action('admin_menu', '');
-add_action('admin_menu', '');
+// add_action('admin_menu', '');
+// add_action('admin_menu', '');
+// add_action('admin_menu', '');
 
 # output file exists [contact (list), category [crud], event[crud], package[crud], ticket[crud], bill[crud]]
 # contact (list)
-function output_contact_view() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_contact_view() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-# category [crud] | event [crud]
-function output_category_view() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// # category [crud] | event [crud]
+// function output_category_view() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_category_create() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_category_create() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_category_update() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_category_update() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_event_view() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_event_view() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_event_create() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_event_create() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_event_update() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_event_update() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_event_detail() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_event_detail() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-# package [crud] | ticket [crud]
-function output_package_view() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// # package [crud] | ticket [crud]
+// function output_package_view() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_package_create() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_package_create() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_package_update() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_package_update() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_ticket_view() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_ticket_view() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_ticket_create() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_ticket_create() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_ticket_update() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_ticket_update() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_ticket_detail() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_ticket_detail() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_ticket_chart() {
+// function output_ticket_chart() {
 
-}
+// }
 
-# bill [crud]
-function output_bill_view() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// # bill [crud]
+// function output_bill_view() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_bill_create() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_bill_create() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_bill_update() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_bill_update() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_bill_detail() {
-    if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-        require_once(ROOT_PLUGIN_PATH . '');
-    }
-}
+// function output_bill_detail() {
+//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
+//         require_once(ROOT_PLUGIN_PATH . '');
+//     }
+// }
 
-function output_bill_chart() {
+// function output_bill_chart() {
 
-}
+// }
 
 # add action script | link (javascript | css | scss | bootstrap | jquery)
 
@@ -361,12 +361,12 @@ function custom_admin_css() {
 ## javascript
 function custom_admin_js() {
     # jquery
-    wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.2.1.min.js', array(), false, array());
+    wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.2.1.min.js', array(), false, true);
     # jquery ui js
-    wp_enqueue_script('jquery-ui-js', 'https://code.jquery.com/ui/1.13.2/jquery-ui.js', array(), false, array());
+    wp_enqueue_script('jquery-ui-js', 'https://code.jquery.com/ui/1.13.2/jquery-ui.js', array(), false, true);
     // wp_enqueue_script('tinymce', '', array(), false, array());
     # app
-    wp_enqueue_script('app', ROOT_PLUGIN_URI . '/public/js/App.js', array(), "v1.0", array());
+    wp_enqueue_script('app', ROOT_PLUGIN_URI . '/public/js/App.js', array(), "v1.0", true);
 
 }
 
