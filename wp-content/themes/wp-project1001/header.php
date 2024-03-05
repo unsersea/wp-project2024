@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <!-- Title -->
-    <title></title>
+    <!-- <title></title> -->
     <!-- Meta -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

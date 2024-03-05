@@ -3,27 +3,28 @@
 /**
  * Plugin Name: wp-project1001-plugins
  * Plugin URI: wp-project1001-plugins/plugin.php
- * Description: Tạo trang danh sách sự kiện
+ * Description: Tạo trang danh sách thể loại
  * Author: unsersea
  * Plugin Version: v1.0
  */
 
 // WP List Table
+
 if (!class_exists("WP_List_Table")) {
     require_once(ABSPATH . "wp-admin/includes/class-wp-list-table.php");
 }
 
 /**
- * WP List Event
+ * WP List Category
  */
 
 // Check is_admin()
 
-if (is_admin()) {
-    return WP_Form_Event();
-}
+// if (is_admin()) {
+//     return WP_Form_Category();
+// }
 
-class WP_Custom_Event extends WP_List_Table
+class WP_Custom_Category extends WP_List_Table
 {
     /**
      * Constructor give some basic params
@@ -33,9 +34,9 @@ class WP_Custom_Event extends WP_List_Table
         // global $status, $page
         parent::__construct(
             array(
-                'singular' => 'event',
-                'plural' => 'event',
-                'ajax' => true
+                'singular' => 'category',
+                'plural' => 'category',
+                'ajax' => false
             )
         );
     }
@@ -84,7 +85,10 @@ class WP_Custom_Event extends WP_List_Table
     {
         $columns = array(
             'cb' => '<input type="checkbox" />',
-
+            '#' => __('#', 'category'),
+            'name_category' => __('Thể Loại', 'category'),
+            'content' => __('Nội Dung', 'category'),
+            'create_at' => __('Ngày Tạo', 'category'),
         );
 
         return $columns;
@@ -117,20 +121,21 @@ class WP_Custom_Event extends WP_List_Table
     /**
      * Process bulk action
      */
-    public function process_bulk_action() 
+    public function process_bulk_action()
     {
         global $wpdb;
 
         $set_name_pj = "pj1001_";
 
-        $table_name = $wpdb->prefix.$set_name_pj."event";
+        $table_name = $wpdb->prefix . $set_name_pj . "category";
 
-        if('delete' === $this->current_action()) {
+        if ('delete' === $this->current_action()) {
             $ids = isset($_REQUEST['id']) ? $_REQUEST['id'] : array();
 
-            if(is_array($ids)) $ids = implode(',', $ids);
+            if (is_array($ids))
+                $ids = implode(',', $ids);
 
-            if(!empty($ids)) {
+            if (!empty($ids)) {
                 $wpdb->query("DELETE FROM $table_name WHERE id IN($ids)");
             }
         }
@@ -139,12 +144,13 @@ class WP_Custom_Event extends WP_List_Table
     /**
      * Prepare items
      */
-    public function prepare_items() {
+    public function prepare_items()
+    {
         global $wpdb;
 
         $set_name_pj = "pj1001_";
 
-        $table_name = $wpdb->prefix.$set_name_pj."event";
+        $table_name = $wpdb->prefix . $set_name_pj . "category";
 
         $per_page = 10;
         $columns = $this->get_columns();
@@ -172,25 +178,70 @@ class WP_Custom_Event extends WP_List_Table
             $this->items = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name ORDER BY $orderby $order LIMIT %d OFFSET %d", $per_page, $paged * $per_page), ARRAY_A);
         }
 
-        $this->set_pagination_args(array(
-            'total_items' => $total_items, // total items defined above
-            'per_page' => $per_page, // per page constant defined at top of method
-            'total_pages' => ceil($total_items / $per_page) // calculate pages count
-        ));
+        $this->set_pagination_args(
+            array(
+                'total_items' => $total_items, // total items defined above
+                'per_page' => $per_page, // per page constant defined at top of method
+                'total_pages' => ceil($total_items / $per_page) // calculate pages count
+            )
+        );
     }
 }
 
-function WP_Form_Event()
+function WP_Form_Category()
 {
-    $obj = new WP_Custom_Event();
+    $obj = new WP_Custom_Category();
     $obj->prepare_items();
+
     ?>
+
     <div class="wrap">
-        <h2 class="wp-heading-inline"><?php _e('', 'event') ?> <a class="page-title-action" href="<?php echo admin_url(''); ?>">Thêm Mới</a></h2>
+        <h2 class="wp-heading-inline">
+            <?php _e('Danh Sách Thể Loại', 'category') ?>
+            <a class="page-title-action" data-id="" data-toggle="modal" data-target="modal-create-category"
+                href="#<?php // echo admin_url('admin.php?page=category');  ?>">Thêm Mới</a>
+        </h2>
         <form id="" method="GET" enctype="multipart/form-data">
             <input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>">
             <?php $obj->display(); ?>
         </form>
     </div>
     <?php
+
+    WP_Modal_Category();
 }
+
+function WP_Modal_Category()
+{
+    global $wpdb;
+
+
+
+    ?>
+    <!-- Create Modal -->
+    <div class="modal fade" id="modal-create-category" tabindex="-1" aria-labelledby="ex-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="" class="form form-modal" enctype="multipart/form-data" id="form-create-category">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tạo Mới</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="bx bx-x"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+WP_Form_Category();

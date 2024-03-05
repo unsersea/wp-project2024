@@ -3,7 +3,7 @@
 /**
  * Plugin Name: wp-project1001-plugins
  * Plugin URI: wp-project1001-plugins/plugin.php
- * Description: Tạo trang danh sách thể loại
+ * Description: Tạo trang danh sách sự kiện
  * Author: unsersea
  * Plugin Version: v1.0
  */
@@ -14,16 +14,16 @@ if (!class_exists("WP_List_Table")) {
 }
 
 /**
- * WP List Category
+ * WP List Event
  */
 
 // Check is_admin()
 
-if (is_admin()) {
-    return WP_Form_Category();
-}
+// if (is_admin()) {
+//     return WP_Form_Event();
+// }
 
-class WP_Custom_Category extends WP_List_Table
+class WP_Custom_Event extends WP_List_Table
 {
     /**
      * Constructor give some basic params
@@ -33,9 +33,9 @@ class WP_Custom_Category extends WP_List_Table
         // global $status, $page
         parent::__construct(
             array(
-                'singular' => 'category',
-                'plural' => 'category',
-                'ajax' => true
+                'singular' => 'event',
+                'plural' => 'event',
+                'ajax' => false
             )
         );
     }
@@ -84,7 +84,7 @@ class WP_Custom_Category extends WP_List_Table
     {
         $columns = array(
             'cb' => '<input type="checkbox" />',
-
+            'id' => __('#', 'event'),
         );
 
         return $columns;
@@ -123,7 +123,7 @@ class WP_Custom_Category extends WP_List_Table
 
         $set_name_pj = "pj1001_";
 
-        $table_name = $wpdb->prefix . $set_name_pj . "category";
+        $table_name = $wpdb->prefix . $set_name_pj . "event";
 
         if ('delete' === $this->current_action()) {
             $ids = isset($_REQUEST['id']) ? $_REQUEST['id'] : array();
@@ -146,7 +146,7 @@ class WP_Custom_Category extends WP_List_Table
 
         $set_name_pj = "pj1001_";
 
-        $table_name = $wpdb->prefix . $set_name_pj . "category";
+        $table_name = $wpdb->prefix . $set_name_pj . "event";
 
         $per_page = 10;
         $columns = $this->get_columns();
@@ -184,17 +184,23 @@ class WP_Custom_Category extends WP_List_Table
     }
 }
 
-function WP_Form_Category()
+function WP_Form_Event()
 {
-    $obj = new WP_Custom_Category();
-    $obj->prepare_items();
+    // $obj = new WP_Custom_Event();
+    // $obj->prepare_items();
+
     ?>
+
     <div class="wrap">
-        <h2 class="wp-heading-inline"><?php _e('', 'category') ?> <a class="page-title-action" href="<?php echo admin_url(''); ?>">Thêm Mới</a></h2>
+        <h2 class="wp-heading-inline">
+            <?php _e('Danh Sách Sự Kiện', 'event') ?> <a class="page-title-action" href="<?php echo admin_url(''); ?>">Thêm Mới</a>
+        </h2>
         <form id="" method="GET" enctype="multipart/form-data">
-            <input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>">
-            <?php $obj->display(); ?>
+            <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>">
+            <?php // $obj->display(); ?>
         </form>
     </div>
     <?php
 }
+
+WP_Form_Event();

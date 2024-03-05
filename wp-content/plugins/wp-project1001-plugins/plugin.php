@@ -177,47 +177,47 @@ register_activation_hook(ROOT_PLUGIN_FILE, array(ROOT_PLUGIN_CLASS, "create_tabl
 # deactivation remove_table()
 register_deactivation_hook(ROOT_PLUGIN_FILE, array(ROOT_PLUGIN_CLASS, "remove_table"));
 
+# add action sidebar menu
+add_action('admin_menu', 'add_menu_category_event');
+// add_action('admin_menu', '');
+// add_action('admin_menu', '');
+
 # sidebar menu function [contact, category, event, package, ticket, bill, chart]
-function add_menu_contact() {
-    # set title
-    $page_title = __('contact title', 'contact domain');
-    # note: only icon | position not add
-    add_menu_page($page_title, 'Phản Hồi', "manage_options", 'contact', "");
-    add_submenu_page($page_title, 'Danh Sách', "manage_options", 'contact detail', '');
-}
+// function add_menu_contact() {
+//     # set title
+//     $page_title = __('contact title', 'contact domain');
+//     # note: only icon | position not add
+//     add_menu_page($page_title, 'Phản Hồi', "manage_options", 'contact', "");
+//     add_submenu_page($page_title, 'Danh Sách', "manage_options", 'contact detail', '');
+// }
 
 function add_menu_category_event() {
     # set title
-    $page_title = __('event title', 'event domain');
+    $page_title = __('event', 'event');
     # note: only icon | position not add
-    add_menu_page($page_title, 'Sự Kiện', "manage_options", 'event', "");
-    add_submenu_page($page_title, 'Thể Loại', "manage_options", 'category list', '');
-    add_submenu_page($page_title, 'Danh Sách', "manage_options", 'event list', '');
+    add_menu_page($page_title, 'Sự Kiện', "manage_options", 'event', 'output_event_view', '', null);
+    add_submenu_page('event' ,__('category', 'category') , 'Thể Loại', "manage_options", 'category', 'output_category_view', null);
+    // add_submenu_page($page_title, 'Danh Sách', "manage_options", 'event list', '');
 }
 
-function add_menu_package_ticket() {
-    # set title
-    $page_title = __('ticket title', 'ticket domain');
-    # note: only icon | position not add
-    add_menu_page($page_title, 'Đặt Vé', "manage_options", 'ticket', "");
-    add_submenu_page($page_title, 'Loại Gói', "manage_options", 'package list', '');
-    add_submenu_page($page_title, 'Danh Sách', "manage_options", 'ticket list', '');
-    add_submenu_page($page_title, 'Biểu Đồ', "manage_options", 'chart', '');
-}
+// function add_menu_package_ticket() {
+//     # set title
+//     $page_title = __('ticket title', 'ticket domain');
+//     # note: only icon | position not add
+//     add_menu_page($page_title, 'Đặt Vé', "manage_options", 'ticket', "");
+//     add_submenu_page($page_title, 'Loại Gói', "manage_options", 'package list', '');
+//     add_submenu_page($page_title, 'Danh Sách', "manage_options", 'ticket list', '');
+//     add_submenu_page($page_title, 'Biểu Đồ', "manage_options", 'chart', '');
+// }
 
-function add_menu_page_bill() {
-    # set title
-    $page_title = __('bill title', 'bill domain');
-    # note: only icon | position not add
-    add_menu_page($page_title, 'Hoá Đơn', "manage_options", 'bill', "");
-    add_submenu_page($page_title, 'Danh Sách', "manage_options", 'bill list', '');
-    add_submenu_page($page_title, 'Biểu Đồ', "manage_options", 'chart', '');
-}
-
-# add action sidebar menu
-// add_action('admin_menu', '');
-// add_action('admin_menu', '');
-// add_action('admin_menu', '');
+// function add_menu_page_bill() {
+//     # set title
+//     $page_title = __('bill title', 'bill domain');
+//     # note: only icon | position not add
+//     add_menu_page($page_title, 'Hoá Đơn', "manage_options", 'bill', "");
+//     add_submenu_page($page_title, 'Danh Sách', "manage_options", 'bill list', '');
+//     add_submenu_page($page_title, 'Biểu Đồ', "manage_options", 'chart', '');
+// }
 
 # output file exists [contact (list), category [crud], event[crud], package[crud], ticket[crud], bill[crud]]
 # contact (list)
@@ -227,12 +227,18 @@ function add_menu_page_bill() {
 //     }
 // }
 
-// # category [crud] | event [crud]
-// function output_category_view() {
-//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-//         require_once(ROOT_PLUGIN_PATH . '');
-//     }
-// }
+# category [crud] | event [crud]
+function output_event_view() {
+    if(file_exists(ROOT_PLUGIN_PATH . '/admin/class-wp-list-event.php')) {
+        require_once(ROOT_PLUGIN_PATH . '/admin/class-wp-list-event.php');
+    }
+}
+
+function output_category_view() {
+    if(file_exists(ROOT_PLUGIN_PATH . '/admin/class-wp-list-category.php')) {
+        require_once(ROOT_PLUGIN_PATH . '/admin/class-wp-list-category.php');
+    }
+}
 
 // function output_category_create() {
 //     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
@@ -241,12 +247,6 @@ function add_menu_page_bill() {
 // }
 
 // function output_category_update() {
-//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-//         require_once(ROOT_PLUGIN_PATH . '');
-//     }
-// }
-
-// function output_event_view() {
 //     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
 //         require_once(ROOT_PLUGIN_PATH . '');
 //     }
@@ -354,19 +354,25 @@ function custom_admin_css() {
     wp_enqueue_style('boxicons', 'https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css', array(), false, 'all');
     # jquery ui css
     wp_enqueue_style('jquery-ui-css', 'https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css', array(), false, 'all');
+    # bootstrap 4
+    wp_enqueue_style('bootstrap4-css', 'https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css', array(), '4.0.0', 'all');
     # style
-    wp_enqueue_style('style main', ROOT_PLUGIN_URI . '/public/css/style.css', array(), "v1.0", 'all');
+    wp_enqueue_style('style-main', ROOT_PLUGIN_URI . '/public/css/style.css', array(), "v1.0", 'all');
 }
 
 ## javascript
 function custom_admin_js() {
     # jquery
-    wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.2.1.min.js', array(), false, true);
+    // wp_enqueue_script('jquery-min', 'https://code.jquery.com/jquery-3.2.1.min.js', array(), '3.2.1', true);
     # jquery ui js
-    wp_enqueue_script('jquery-ui-js', 'https://code.jquery.com/ui/1.13.2/jquery-ui.js', array(), false, true);
+    // wp_enqueue_script('jquery-ui-js', 'https://code.jquery.com/ui/1.13.2/jquery-ui.js', array(), '1.13.2', true);
+    # bootstrap 4
+    wp_enqueue_script('jquery-slim-min', 'https://code.jquery.com/jquery-3.2.1.slim.min.js', array(), '3.2.1', true);
+    wp_enqueue_script('popper-4-js', 'https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js', array(), '1.12.9', true);
+    wp_enqueue_script('bootstrap-modal-js', 'https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js', array(), '4.0.0', true);
     // wp_enqueue_script('tinymce', '', array(), false, array());
-    # app
-    wp_enqueue_script('app', ROOT_PLUGIN_URI . '/public/js/App.js', array(), "v1.0", true);
+    # common
+    wp_enqueue_script('common-admin-js', ROOT_PLUGIN_URI . '/public/js/Common.js', array(), "v1.0", true);
 
 }
 
