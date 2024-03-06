@@ -198,8 +198,8 @@ function WP_Form_Category()
     <div class="wrap">
         <h2 class="wp-heading-inline">
             <?php _e('Danh Sách Thể Loại', 'category') ?>
-            <a class="page-title-action" data-id="" data-toggle="modal" data-target="modal-create-category"
-                href="#<?php // echo admin_url('admin.php?page=category');  ?>">Thêm Mới</a>
+            <a class="page-title-action" data-id="" data-toggle="modal" data-target="#modal-create-category" href="#">Thêm
+                Mới</a>
         </h2>
         <form id="" method="GET" enctype="multipart/form-data">
             <input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>">
@@ -210,6 +210,7 @@ function WP_Form_Category()
 
     WP_Modal_Category();
 }
+
 
 function WP_Modal_Category()
 {
@@ -222,7 +223,8 @@ function WP_Modal_Category()
     <div class="modal fade" id="modal-create-category" tabindex="-1" aria-labelledby="ex-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="" class="form form-modal" enctype="multipart/form-data" id="form-create-category">
+                <form action="<?php // echo admin_url('admin.php?page=category');  ?>" method="POST" class="form form-modal"
+                    enctype="multipart/form-data" id="form-create-category">
                     <div class="modal-header">
                         <h5 class="modal-title">Tạo Mới</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -232,16 +234,78 @@ function WP_Modal_Category()
                         </button>
                     </div>
                     <div class="modal-body">
-
+                        <div class="field-modal">
+                            <label class="form-label">Thể Loại</label>
+                            <input type="text" name="category-name" class="form-control-dsg" placeholder="Nhập thể loại">
+                        </div>
+                        <div class="field-modal field-texta">
+                            <label class="form-label">Nội Dung</label>
+                            <textarea name="category-content" class="form-control-dsg" rows="3"
+                                placeholder="Nhập nội dung"></textarea>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary" id="submit-create-category">Lưu Thay Đổi</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <?php
+
+    ?>
+    <script type="text/javascript">
+
+        jQuery(function($) {
+            //
+            function modal_category() {
+                // Create Form
+                $("#submit-create-category").click(function (e) {
+                    e.preventDefault();
+
+                    // Get Form Value
+                    var form_element = document.getElementById("form-create-category");
+
+                    var elements = form_element.elements;
+
+                    var values = {};
+
+                    for (var i = 0; i < elements.length; i++) {
+                        var element = elements[i];
+
+                        // Check if the element has a name (to exclude submit buttons, etc.)
+                        if (element.name) {
+                            // Add the element's value to the object using the name as the key
+                            values[element.name] = element.value;
+                        }
+                    }
+
+                    // console.log("Form values:", values);
+                    var category_name_value = values["category-name"];
+                    var category_content_value = values["category-content"];
+
+                    $.ajax({
+                        type: "POST",
+                        url: "",
+                        data: {
+                            category: category_name_value,
+                            content: category_content_value,
+                            action: "submit-create-category",
+                        },
+                        success: function (data) { 
+
+                        },
+                    });
+                });
+            }
+
+            modal_category();
+        });
+
+    </script>
+
+<?php
 }
 
 WP_Form_Category();

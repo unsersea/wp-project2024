@@ -1,4 +1,62 @@
-.ReactModalPortal {
+/* .ReactModalPortal {
     position: relative;
     z-index: 999;    
+} */
+
+input:focus,
+textarea:focus,
+button:focus {
+    outline: 0 !important;
+}
+
+textarea {
+    resize: none;
+}
+
+.form-modal .form-label {
+    font-weight: 600;
+    margin-bottom: 0.25rem !important;
+}
+
+.form-modal .field-modal,
+.form-modal .field-modal.textarea {
+    position: relative;
+    margin-bottom: 0.75rem !important;
+}
+
+.form-control-dsg {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: var(--c-white);
+    background-clip: padding-box;
+    border: 1px solid #ced4da !important;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+input[type=color],
+input[type=date],
+input[type=datetime-local],
+input[type=datetime],
+input[type=email],
+input[type=month],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=tel],
+input[type=text],
+input[type=time],
+input[type=url],
+input[type=week],
+select,
+textarea {
+    box-shadow: 0 0 0 transparent;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    background-color: var(--c-white);
+    color: #2c3338;
 }

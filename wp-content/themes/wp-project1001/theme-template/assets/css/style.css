@@ -17,6 +17,10 @@
     --c-cloud-text: #5b5b7b;
     --c-cloud-border: #cacaca;
     --c-watermelon: #fc6c85;
+    --c-purple: #8b3588;
+    --c-dark-blue: #2c54a7;
+    --c-dark-green: #23a455;
+    --c-dark-purple: #c100c5;
 
     /* F Family */
     --ff-owald: 'Oswald', sans-serif;
@@ -179,4 +183,79 @@ section.section-navbar-menu {
 section.section-navbar-menu .container {
     max-width: 100% !important;
     padding: 0;
+}
+
+/**
+ * Middle Page
+ */
+section.section-middle-page {
+    padding-block-start: 3rem;
+    padding-block-end: 3rem;
+}
+
+section.section-middle-page .elementor-time {
+    padding: 3rem 0;
+}
+
+section.section-middle-page .elementor-time .container {
+    max-width: 991.20px;
+    margin: 0 auto;
+}
+
+section.section-middle-page .elementor-time .elementor-time-header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section.section-middle-page .elementor-time .elementor-time-header > h2.eltime-header-title {
+    text-transform: uppercase;
+    color: var(--c-purple);
+    font-weight: 600;
+    font-size: 2.5rem !important;
+}
+
+section.section-middle-page .elementor-time .elementor-time-body {
+    position: relative;
+    padding-block-start: 2rem;
+    padding-block-end: 2rem;
+}
+
+section.section-middle-page .elementor-time .elementor-time-body .eltime-icon-box,
+section.section-middle-page .elementor-time .elementor-time-body .eltime-icon-content {
+    text-align: center;
+}
+
+section.section-middle-page .elementor-time .elementor-time-body .eltime-icon-box span > i.bx {
+    font-size: 3.5rem;
+}
+
+section.section-middle-page .elementor-time .elementor-time-body .eltime-icon-content {
+    padding: 12px 0;
+}
+
+section.section-middle-page .elementor-time .elementor-time-body .eltime-icon-content .eltime-icon-title {
+    font-weight: 600;
+}
+
+section.section-middle-page .elementor-time .elementor-time-body .col-12:nth-child(1) .eltime-icon-box span > i.bx,
+section.section-middle-page .elementor-time .elementor-time-body .col-12:nth-child(1) .eltime-icon-content .eltime-icon-title {
+    color: var(--c-dark-blue);
+}
+
+section.section-middle-page .elementor-time .elementor-time-body .col-12:nth-child(2) .eltime-icon-box span > i.bx,
+section.section-middle-page .elementor-time .elementor-time-body .col-12:nth-child(2) .eltime-icon-content .eltime-icon-title {
+    color: var(--c-dark-green);
+}
+
+section.section-middle-page .elementor-time .elementor-time-body .col-12:nth-child(3) .eltime-icon-box span > i.bx,
+section.section-middle-page .elementor-time .elementor-time-body .col-12:nth-child(3) .eltime-icon-content .eltime-icon-title {
+    color: var(--c-dark-purple);
+}
+
+section.section-middle-page .elementor-time .elementor-time-body .eltime-icon-content .eltime-icon-dtime {
+    padding: 12px 0;
+    font-size: 1.25rem;
 }

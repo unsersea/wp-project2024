@@ -358,12 +358,14 @@ function custom_admin_css() {
     wp_enqueue_style('bootstrap4-css', 'https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css', array(), '4.0.0', 'all');
     # style
     wp_enqueue_style('style-main', ROOT_PLUGIN_URI . '/public/css/style.css', array(), "v1.0", 'all');
+    #
+    wp_enqueue_script('jquery-min-3.6.0', 'https://code.jquery.com/jquery-3.6.0.min.js', array(), "3.6.0", true);
 }
 
 ## javascript
 function custom_admin_js() {
     # jquery
-    // wp_enqueue_script('jquery-min', 'https://code.jquery.com/jquery-3.2.1.min.js', array(), '3.2.1', true);
+    // wp_enqueue_script('jquery-min-js', 'https://code.jquery.com/jquery-3.2.1.min.js', array(), '3.2.1', true);
     # jquery ui js
     // wp_enqueue_script('jquery-ui-js', 'https://code.jquery.com/ui/1.13.2/jquery-ui.js', array(), '1.13.2', true);
     # bootstrap 4
@@ -372,12 +374,14 @@ function custom_admin_js() {
     wp_enqueue_script('bootstrap-modal-js', 'https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js', array(), '4.0.0', true);
     // wp_enqueue_script('tinymce', '', array(), false, array());
     # common
-    wp_enqueue_script('common-admin-js', ROOT_PLUGIN_URI . '/public/js/Common.js', array(), "v1.0", true);
+    wp_enqueue_script('common-admin-js', ROOT_PLUGIN_URI . '/public/js/Common.js', array('jquery'), "v1.0", true);
 
 }
 
 add_action('admin_enqueue_scripts', 'custom_admin_css');
 add_action('admin_enqueue_scripts', 'custom_admin_js');
+
+wp_enqueue_script('jquery');
 
 # upgrader
 
