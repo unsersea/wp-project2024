@@ -223,8 +223,8 @@ function WP_Modal_Category()
     <div class="modal fade" id="modal-create-category" tabindex="-1" aria-labelledby="ex-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="<?php // echo admin_url('admin.php?page=category');  ?>" method="POST" class="form form-modal"
-                    enctype="multipart/form-data" id="form-create-category">
+                <form action="<?php // echo admin_url('admin.php?page=category');    ?>" method="POST"
+                    class="form form-modal" enctype="multipart/form-data" id="form-create-category">
                     <div class="modal-header">
                         <h5 class="modal-title">Tạo Mới</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -237,6 +237,7 @@ function WP_Modal_Category()
                         <div class="field-modal">
                             <label class="form-label">Thể Loại</label>
                             <input type="text" name="category-name" class="form-control-dsg" placeholder="Nhập thể loại">
+                            <div class="div-error" id="error-category-name"></div>
                         </div>
                         <div class="field-modal field-texta">
                             <label class="form-label">Nội Dung</label>
@@ -257,7 +258,7 @@ function WP_Modal_Category()
     ?>
     <script type="text/javascript">
 
-        jQuery(function($) {
+        jQuery(function ($) {
             //
             function modal_category() {
                 // Create Form
@@ -285,18 +286,30 @@ function WP_Modal_Category()
                     var category_name_value = values["category-name"];
                     var category_content_value = values["category-content"];
 
-                    $.ajax({
-                        type: "POST",
-                        url: "",
-                        data: {
-                            category: category_name_value,
-                            content: category_content_value,
-                            action: "submit-create-category",
-                        },
-                        success: function (data) { 
+                    // error
+                    var error_category_name = document.querySelector("#form-create-category #error-category-name");
 
-                        },
-                    });
+                    if (category_name_value === '') {
+                        error_category_name.innerHTML = "*Bạn chưa nhập tên thể loại!";
+                    } else {
+                        // set empty error
+                        error_category_name.innerHTML = "";
+
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php admin_url('../admin/controller/CategoryController.php') ?>",
+                            data: {
+                                category: category_name_value,
+                                content: category_content_value,
+                                action: "submit-create-category",
+                            },
+                            success: function (data) {
+                                jQuery("#modal-create-category").modal('hide');
+
+                                jQuery("#form-create-category")[0].reset();
+                            },
+                        });
+                    }
                 });
             }
 
@@ -305,7 +318,44 @@ function WP_Modal_Category()
 
     </script>
 
-<?php
+    <?php
+}
+
+function category_controller()
+{
+    global $wpdb;
+
+    $set_name_pj = "pj1001_";
+
+    $table_name = $wpdb->prefix . $set_name_pj . "category";
+
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+        if (!empty($_REQUEST["action-modal"])) {
+            $action = $_REQUEST["action-modal"];
+
+            if ($action == "submit-create-category") {
+                // print_r($_REQUEST);
+                // die();
+                $category = $_REQUEST["category"];
+                $content = $_REQUEST["content"];
+
+                // $wpdb->insert($table_name, array(
+                //     'name_category' => $category,
+                //     'content' => $content,
+                //     'create_at' => date('j/n/Y - g:i a')
+                // ));
+
+                // echo json_encode($_REQUEST);
+            }
+        } else {
+
+        }
+    } else {
+
+    }
 }
 
 WP_Form_Category();

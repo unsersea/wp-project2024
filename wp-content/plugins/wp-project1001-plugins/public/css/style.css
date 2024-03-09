@@ -60,3 +60,9 @@ textarea {
     background-color: var(--c-white);
     color: #2c3338;
 }
+
+.modal .modal-content .form-modal .div-error {
+    font-size: 0.9rem;
+    color: #d93025;
+    font-weight: 400;
+}

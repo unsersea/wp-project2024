@@ -198,6 +198,7 @@ function add_menu_category_event() {
     add_menu_page($page_title, 'Sự Kiện', "manage_options", 'event', 'output_event_view', '', null);
     add_submenu_page('event' ,__('category', 'category') , 'Thể Loại', "manage_options", 'category', 'output_category_view', null);
     // add_submenu_page($page_title, 'Danh Sách', "manage_options", 'event list', '');
+
 }
 
 // function add_menu_package_ticket() {
