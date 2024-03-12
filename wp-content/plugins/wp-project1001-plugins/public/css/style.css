@@ -66,3 +66,26 @@ textarea {
     color: #d93025;
     font-weight: 400;
 }
+
+/**
+ * Wrap
+ */
+
+.wrap {
+    position: relative;
+}
+
+.wrap .container {
+    width: 100%;
+    height: auto;
+}
+
+.wrap .container form.form-action-admin {
+    position: relative;
+    padding: 16px 0;
+}
+
+.wrap .container form.form-action-admin .field {
+    position: relative;
+    margin-bottom: 1rem;
+}

@@ -214,7 +214,8 @@ section.section-middle-page .elementor-time .elementor-time-header > h2.eltime-h
     text-transform: uppercase;
     color: var(--c-purple);
     font-weight: 600;
-    font-size: 2.5rem !important;
+    font-size: 2.425rem !important;
+    text-align: center;
 }
 
 section.section-middle-page .elementor-time .elementor-time-body {
@@ -258,4 +259,23 @@ section.section-middle-page .elementor-time .elementor-time-body .col-12:nth-chi
 section.section-middle-page .elementor-time .elementor-time-body .eltime-icon-content .eltime-icon-dtime {
     padding: 12px 0;
     font-size: 1.25rem;
+}
+
+/**
+ *
+ */
+section.section-middle-page .elementor-tt-why .elementor-tt-why-header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section.section-middle-page .elementor-tt-why .elementor-tt-why-header > h2.elttw-header-title {
+    text-transform: uppercase;
+    color: var(--c-purple);
+    font-weight: 600;
+    font-size: 2.125rem !important;
+    text-align: center;
 }

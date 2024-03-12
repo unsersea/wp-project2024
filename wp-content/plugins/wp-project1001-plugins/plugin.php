@@ -195,8 +195,9 @@ function add_menu_category_event() {
     # set title
     $page_title = __('event', 'event');
     # note: only icon | position not add
-    add_menu_page($page_title, 'Sự Kiện', "manage_options", 'event', 'output_event_view', '', null);
-    add_submenu_page('event' ,__('category', 'category') , 'Thể Loại', "manage_options", 'category', 'output_category_view', null);
+    add_menu_page($page_title, 'Sự Kiện', 'manage_options', 'event', 'output_event_view', '', null);
+    add_submenu_page('event' ,__('category', 'category') , 'Thể Loại', 'manage_options', 'category', 'output_category_view', null);
+    add_submenu_page(null ,__('category', 'category')  ,'Tạo Mới Thể Loại', 'manage_options', 'create_category', 'output_category_create', null);
     // add_submenu_page($page_title, 'Danh Sách', "manage_options", 'event list', '');
 
 }
@@ -241,11 +242,11 @@ function output_category_view() {
     }
 }
 
-// function output_category_create() {
-//     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
-//         require_once(ROOT_PLUGIN_PATH . '');
-//     }
-// }
+function output_category_create() {
+    if(file_exists(ROOT_PLUGIN_PATH . '/admin/crud/category/class-wp-create-category.php')) {
+        require_once(ROOT_PLUGIN_PATH . '/admin/crud/category/class-wp-create-category.php');
+    }
+}
 
 // function output_category_update() {
 //     if(!file_exists(ROOT_PLUGIN_PATH . '')) {
