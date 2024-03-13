@@ -36,7 +36,7 @@ class WP_Custom_Category extends WP_List_Table
             array(
                 'singular' => 'category',
                 'plural' => 'category',
-                'ajax' => false
+                'ajax' => true
             )
         );
     }
@@ -85,7 +85,7 @@ class WP_Custom_Category extends WP_List_Table
     {
         $columns = array(
             'cb' => '<input type="checkbox" />',
-            '#' => __('#', 'category'),
+            'id' => __('#', 'category'),
             'name_category' => __('Thể Loại', 'category'),
             'content' => __('Nội Dung', 'category'),
             'create_at' => __('Ngày Tạo', 'category'),
@@ -188,28 +188,38 @@ class WP_Custom_Category extends WP_List_Table
     }
 }
 
+// add_action('wp_ajax_load_custom_table', 'WP_Form_Category');
+
 function WP_Form_Category()
 {
     $obj = new WP_Custom_Category();
     $obj->prepare_items();
-
+    // ob_start();
     ?>
 
     <div class="wrap">
         <h2 class="wp-heading-inline">
             <?php _e('Danh Sách Thể Loại', 'category') ?>
-            <!-- <a class="page-title-action" data-id="" data-toggle="modal" data-target="#modal-create-category" href="#">Thêm
-                Mới</a> -->
-            <a class="page-title-action" href="<?php echo admin_url('admin.php?page=create_category') ?>">Thêm Mới</a>
+            <a class="page-title-action" data-id="" data-toggle="modal" data-target="#modal-create-category" href="#">Thêm
+                Mới</a>
+            <!-- <a class="page-title-action" href="<?php // echo admin_url('admin.php?page=create_category')    ?>">Thêm Mới</a> -->
         </h2>
         <form id="" method="GET" enctype="multipart/form-data">
             <input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>">
-            <?php $obj->display(); ?>
+            <div id="wp-list-table-category-container">
+                <?php $obj->display(); ?>
+            </div>
         </form>
     </div>
     <?php
+    WP_Modal_Category();
 
-    // WP_Modal_Category();
+    // $table_html = ob_get_clean();
+    // echo $table_html;
+
+
+    // die();
+
 }
 
 
@@ -221,11 +231,11 @@ function WP_Modal_Category()
 
     ?>
     <!-- Create Modal -->
-    <!-- <div class="modal fade" id="modal-create-category" tabindex="-1" aria-labelledby="ex-modal-label" aria-hidden="true">
+    <div class="modal fade" id="modal-create-category" tabindex="-1" aria-labelledby="ex-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="<?php // echo admin_url('admin.php?page=category');  ?>" method="POST" class="form form-modal"
-                    enctype="multipart/form-data" id="form-create-category">
+                <form action="<?php // echo admin_url('admin.php?page=category');     ?>" method="POST"
+                    class="form form-modal" enctype="multipart/form-data" id="form-create-category">
                     <div class="modal-header">
                         <h5 class="modal-title">Tạo Mới</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -249,114 +259,107 @@ function WP_Modal_Category()
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                         <button type="submit" class="btn btn-primary" id="submit-create-category">Lưu Thay Đổi</button>
+                        <!-- <input type="submit" class="btn btn-primary" id="submit-create-category" name="action-modal" value="Lưu Thay Đổi"> -->
                     </div>
                 </form>
             </div>
         </div>
-    </div> -->
+    </div>
     <?php
 
     ?>
     <script type="text/javascript">
 
-        // jQuery(function ($) {
-        //     //
-        //     function modal_category() {
-        //         // Create Form
-        //         $("#submit-create-category").click(function (e) {
-        //             e.preventDefault();
+        jQuery(function ($) {
 
-        //             // Get Form Value
-        //             var form_element = document.getElementById("form-create-category");
+            // load table
+            function load_table_category() {
+                // $.ajax({
+                //     url: ajaxurl, // WordPress AJAX URL
+                //     type: 'GET',
+                //     data: {
+                //         action: 'load_wp_list_table_form' // AJAX action to handle
+                //         // Additional parameters can be added here if needed
+                //     },
+                //     success: function (response) {
+                //         // Update the table container with the response
+                //         $('#wp-list-table-category-container').html(response);
+                //     },
+                //     error: function (xhr, status, error) {
+                //         console.error(xhr.responseText);
+                //     }
+                // });
+            }
 
-        //             var elements = form_element.elements;
+            // modal category
+            function modal_category() {
+                // Create Form
+                $("#submit-create-category").click(function (e) {
+                    e.preventDefault();
 
-        //             var values = {};
+                    // Get Form Value
+                    var form_element = document.getElementById("form-create-category");
 
-        //             for (var i = 0; i < elements.length; i++) {
-        //                 var element = elements[i];
+                    var elements = form_element.elements;
 
-        //                 // Check if the element has a name (to exclude submit buttons, etc.)
-        //                 if (element.name) {
-        //                     // Add the element's value to the object using the name as the key
-        //                     values[element.name] = element.value;
-        //                 }
-        //             }
+                    var values = {};
 
-        //             // console.log("Form values:", values);
-        //             var category_name_value = values["category-name"];
-        //             var category_content_value = values["category-content"];
+                    for (var i = 0; i < elements.length; i++) {
+                        var element = elements[i];
 
-        //             // error
-        //             var error_category_name = document.querySelector("#form-create-category #error-category-name");
+                        // Check if the element has a name (to exclude submit buttons, etc.)
+                        if (element.name) {
+                            // Add the element's value to the object using the name as the key
+                            values[element.name] = element.value;
+                        }
+                    }
 
-        //             if (category_name_value === '') {
-        //                 error_category_name.innerHTML = "*Bạn chưa nhập tên thể loại!";
-        //             } else {
-        //                 // set empty error
-        //                 error_category_name.innerHTML = "";
+                    // console.log("Form values:", values);
+                    var category_name_value = values["category-name"];
+                    var category_content_value = values["category-content"];
 
-        //                 $.ajax({
-        //                     type: "POST",
-        //                     url: "<?php // admin_url('../admin/controller/CategoryController.php') ?>",
-        //                     data: {
-        //                         category: category_name_value,
-        //                         content: category_content_value,
-        //                         action: "submit-create-category",
-        //                     },
-        //                     success: function (data) {
-        //                         jQuery("#modal-create-category").modal('hide');
+                    // error
+                    var error_category_name = document.querySelector("#form-create-category #error-category-name");
 
-        //                         jQuery("#form-create-category")[0].reset();
-        //                     },
-        //                 });
-        //             }
-        //         });
-        //     }
+                    if (category_name_value === '') {
+                        error_category_name.innerHTML = "*Bạn chưa nhập tên thể loại!";
+                    } else {
+                        // set empty error
+                        error_category_name.innerHTML = "";
 
-        //     modal_category();
-        // });
+                        // Form Data
+                        // var formData = new FormData(jQuery(form_element)[0]);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "<?php echo plugin_dir_url(__FILE__) . 'controller/CategoryController.php' // admin_url('../admin/controller/CategoryController.php')    ?>",
+                            data: {
+                                category: category_name_value,
+                                content: category_content_value,
+                                action: "submit-create-category",
+                            },
+                            // data: formData,
+                            // contentType: false,
+                            // processData: false,
+                            success: function (data) {
+                                jQuery("#modal-create-category").modal('hide');
+
+                                jQuery("#form-create-category")[0].reset();
+
+                                // Load WP List Table
+                                load_table_category();
+                            },
+                        });
+                    }
+                });
+            }
+
+            modal_category();
+        });
 
     </script>
 
     <?php
-}
-
-function category_controller()
-{
-    // global $wpdb;
-
-    // $set_name_pj = "pj1001_";
-
-    // $table_name = $wpdb->prefix . $set_name_pj . "category";
-
-    // date_default_timezone_set('Asia/Ho_Chi_Minh');
-
-    // if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
-    //     if (!empty($_REQUEST["action-modal"])) {
-    //         $action = $_REQUEST["action-modal"];
-
-    //         if ($action == "submit-create-category") {
-    //             // print_r($_REQUEST);
-    //             // die();
-    //             $category = $_REQUEST["category"];
-    //             $content = $_REQUEST["content"];
-
-    //             // $wpdb->insert($table_name, array(
-    //             //     'name_category' => $category,
-    //             //     'content' => $content,
-    //             //     'create_at' => date('j/n/Y - g:i a')
-    //             // ));
-
-    //             // echo json_encode($_REQUEST);
-    //         }
-    //     } else {
-
-    //     }
-    // } else {
-
-    // }
 }
 
 WP_Form_Category();

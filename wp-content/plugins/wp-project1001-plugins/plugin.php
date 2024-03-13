@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Plugin Name: wp-project1001-plugins
@@ -9,7 +9,8 @@
  */
 
 // Check Defined ABSPATH
-if(!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 // Set Define Root
 define("ROOT_PLUGIN_URI", plugin_dir_url(__FILE__));
@@ -18,23 +19,25 @@ define("ROOT_PLUGIN_FILE", __FILE__);
 define("ROOT_PLUGIN_VERSION", "1.0.0");
 define("ROOT_PLUGIN_CLASS", "Plugin_Project1001");
 
-class Plugin_Project1001 {
-    
+class Plugin_Project1001
+{
+
     # create_table function
-    public static function create_table() {
+    public static function create_table()
+    {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
         $set_name_pj = "pj1001_";
 
         // Set Table Name with prefix . $set_name_pj
-        $tb_contact = $wpdb->prefix.$set_name_pj."contact";
-        $tb_category = $wpdb->prefix.$set_name_pj."category";
-        $tb_event = $wpdb->prefix.$set_name_pj."event";
-        $tb_category_event = $wpdb->prefix.$set_name_pj."category_event";
-        $tb_package = $wpdb->prefix.$set_name_pj."package";
-        $tb_ticket = $wpdb->prefix.$set_name_pj."ticket";
-        $tb_bill = $wpdb->prefix.$set_name_pj."bill";
-        $tb_url_ticket = $wpdb->prefix.$set_name_pj."url_ticket";
+        $tb_contact = $wpdb->prefix . $set_name_pj . "contact";
+        $tb_category = $wpdb->prefix . $set_name_pj . "category";
+        $tb_event = $wpdb->prefix . $set_name_pj . "event";
+        $tb_category_event = $wpdb->prefix . $set_name_pj . "category_event";
+        $tb_package = $wpdb->prefix . $set_name_pj . "package";
+        $tb_ticket = $wpdb->prefix . $set_name_pj . "ticket";
+        $tb_bill = $wpdb->prefix . $set_name_pj . "bill";
+        $tb_url_ticket = $wpdb->prefix . $set_name_pj . "url_ticket";
 
         ### Set Table SQL
         $sql_contact = "CREATE TABLE $tb_contact(
@@ -142,29 +145,37 @@ class Plugin_Project1001 {
     }
 
     # remove_table function
-    public static function remove_table() {
+    public static function remove_table()
+    {
         global $wpdb;
         $set_name_pj = "pj1001_";
 
         // Set Table Name with prefix . $set_name_pj
-        $tb_contact = $wpdb->prefix.$set_name_pj."contact";
-        $tb_category = $wpdb->prefix.$set_name_pj."category";
-        $tb_event = $wpdb->prefix.$set_name_pj."event";
-        $tb_category_event = $wpdb->prefix.$set_name_pj."category_event";
-        $tb_package = $wpdb->prefix.$set_name_pj."package";
-        $tb_ticket = $wpdb->prefix.$set_name_pj."ticket";
-        $tb_bill = $wpdb->prefix.$set_name_pj."bill";
-        $tb_url_ticket = $wpdb->prefix.$set_name_pj."url_ticket";
+        $tb_contact = $wpdb->prefix . $set_name_pj . "contact";
+        $tb_category = $wpdb->prefix . $set_name_pj . "category";
+        $tb_event = $wpdb->prefix . $set_name_pj . "event";
+        $tb_category_event = $wpdb->prefix . $set_name_pj . "category_event";
+        $tb_package = $wpdb->prefix . $set_name_pj . "package";
+        $tb_ticket = $wpdb->prefix . $set_name_pj . "ticket";
+        $tb_bill = $wpdb->prefix . $set_name_pj . "bill";
+        $tb_url_ticket = $wpdb->prefix . $set_name_pj . "url_ticket";
 
         /**
          * Delete Foreign Key | Table
          */
         $table_array = [
-            $tb_url_ticket, $tb_bill, $tb_ticket, $tb_category_event, $tb_event, $tb_package, $tb_contact, $tb_category
+            $tb_url_ticket,
+            $tb_bill,
+            $tb_ticket,
+            $tb_category_event,
+            $tb_event,
+            $tb_package,
+            $tb_contact,
+            $tb_category
         ];
 
         # Foreach Array Table To Remove
-        foreach($table_array as $table_name) {
+        foreach ($table_array as $table_name) {
             $sql_drop_table = "DROP TABLE IF EXISTS $table_name";
             $result = $wpdb->query($sql_drop_table);
         }
@@ -191,13 +202,15 @@ add_action('admin_menu', 'add_menu_category_event');
 //     add_submenu_page($page_title, 'Danh Sách', "manage_options", 'contact detail', '');
 // }
 
-function add_menu_category_event() {
+function add_menu_category_event()
+{
     # set title
     $page_title = __('event', 'event');
     # note: only icon | position not add
     add_menu_page($page_title, 'Sự Kiện', 'manage_options', 'event', 'output_event_view', '', null);
-    add_submenu_page('event' ,__('category', 'category') , 'Thể Loại', 'manage_options', 'category', 'output_category_view', null);
-    add_submenu_page(null ,__('category', 'category')  ,'Tạo Mới Thể Loại', 'manage_options', 'create_category', 'output_category_create', null);
+    add_submenu_page('event', __('category', 'category'), 'Thể Loại', 'manage_options', 'category', 'output_category_view', null);
+    // add_submenu_page(null ,__('category', 'category')  ,'Tạo Mới Thể Loại', 'manage_options', 'create_category', 'output_category_create', null);
+    add_submenu_page(null, __('category', 'category'), 'Controller', 'manage_options', 'category_controller', 'output_category_controller', null);
     // add_submenu_page($page_title, 'Danh Sách', "manage_options", 'event list', '');
 
 }
@@ -230,21 +243,30 @@ function add_menu_category_event() {
 // }
 
 # category [crud] | event [crud]
-function output_event_view() {
-    if(file_exists(ROOT_PLUGIN_PATH . '/admin/class-wp-list-event.php')) {
+function output_event_view()
+{
+    if (file_exists(ROOT_PLUGIN_PATH . '/admin/class-wp-list-event.php')) {
         require_once(ROOT_PLUGIN_PATH . '/admin/class-wp-list-event.php');
     }
 }
 
-function output_category_view() {
-    if(file_exists(ROOT_PLUGIN_PATH . '/admin/class-wp-list-category.php')) {
+function output_category_view()
+{
+    if (file_exists(ROOT_PLUGIN_PATH . '/admin/class-wp-list-category.php')) {
         require_once(ROOT_PLUGIN_PATH . '/admin/class-wp-list-category.php');
     }
 }
 
-function output_category_create() {
-    if(file_exists(ROOT_PLUGIN_PATH . '/admin/crud/category/class-wp-create-category.php')) {
-        require_once(ROOT_PLUGIN_PATH . '/admin/crud/category/class-wp-create-category.php');
+// function output_category_create() {
+//     if(file_exists(ROOT_PLUGIN_PATH . '/admin/crud/category/class-wp-create-category.php')) {
+//         require_once(ROOT_PLUGIN_PATH . '/admin/crud/category/class-wp-create-category.php');
+//     }
+// }
+
+function output_category_controller()
+{
+    if (file_exists(ROOT_PLUGIN_PATH . '/admin/controller/CategoryController.php')) {
+        require_once(ROOT_PLUGIN_PATH . '/admin/controller/CategoryController.php');
     }
 }
 
@@ -351,7 +373,8 @@ function output_category_create() {
 # add action script | link (javascript | css | scss | bootstrap | jquery)
 
 ## css
-function custom_admin_css() {
+function custom_admin_css()
+{
     # cdn boxicons
     wp_enqueue_style('boxicons', 'https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css', array(), false, 'all');
     # jquery ui css
@@ -365,7 +388,8 @@ function custom_admin_css() {
 }
 
 ## javascript
-function custom_admin_js() {
+function custom_admin_js()
+{
     # jquery
     // wp_enqueue_script('jquery-min-js', 'https://code.jquery.com/jquery-3.2.1.min.js', array(), '3.2.1', true);
     # jquery ui js
@@ -388,5 +412,5 @@ wp_enqueue_script('jquery');
 # upgrader
 
 // function custom_upgrader() {
-    
+
 // }
