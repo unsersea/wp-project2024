@@ -359,7 +359,7 @@ function custom_admin_css() {
     # bootstrap 4
     wp_enqueue_style('bootstrap4-css', 'https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css', array(), '4.0.0', 'all');
     # style
-    wp_enqueue_style('style-main', ROOT_PLUGIN_URI . '/public/css/style.css', array(), "v1.0", 'all');
+    wp_enqueue_style('style-main', ROOT_PLUGIN_URI . 'public/css/style.css', array(), "v1.0", 'all');
     #
     wp_enqueue_script('jquery-min-3.6.0', 'https://code.jquery.com/jquery-3.6.0.min.js', array(), "3.6.0", true);
 }

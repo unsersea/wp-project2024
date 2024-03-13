@@ -61,31 +61,80 @@ textarea {
     color: #2c3338;
 }
 
-.modal .modal-content .form-modal .div-error {
+/* .modal .modal-content .form-modal .div-error {
     font-size: 0.9rem;
     color: #d93025;
     font-weight: 400;
-}
+} */
 
 /**
  * Wrap
  */
 
-.wrap {
+/* .wrap {
     position: relative;
 }
 
 .wrap .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     width: 100%;
     height: auto;
 }
 
+.wrap .container .wrap-page {
+    max-width: 425px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.wrap .container .wrap-page .wrap-header {
+    background-color: #1d2327;
+    width: 100%;
+    height: 100%;
+    padding: 16px 0;
+    border-radius: 10px 10px 0 0;
+}
+
+.wrap .container .wrap-page .wrap-header h2 {
+    color: #ffffff;
+    font-weight: bolder;
+    text-align: center;
+    font-size: 1.75rem;
+}
+
 .wrap .container form.form-action-admin {
     position: relative;
-    padding: 16px 0;
+    padding: 16px;
 }
 
 .wrap .container form.form-action-admin .field {
     position: relative;
     margin-bottom: 1rem;
 }
+
+.wrap .container form.form-action-admin .field label {
+    display: block !important;
+    width: 100% !important;
+    font-weight: bolder;
+    font-size: 1rem !important;
+    cursor: context-menu !important;
+}
+
+.wrap .container form.form-action-admin .field input,
+.wrap .container form.form-action-admin .field textarea {
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    font-size: 1rem;
+}
+
+.wrap .container form.form-action-admin .field-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+} */
