@@ -222,6 +222,10 @@ function WP_Form_Category()
 
 }
 
+function reload_wp_list_table_category_callback() {
+    
+}
+
 
 function WP_Modal_Category()
 {
