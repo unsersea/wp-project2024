@@ -11,7 +11,7 @@
 // WP List Table
 
 if (!class_exists("WP_List_Table")) {
-    require_once(ABSPATH . "wp-admin/includes/class-wp-list-table.php");
+    require_once (ABSPATH . "wp-admin/includes/class-wp-list-table.php");
 }
 
 /**
@@ -130,12 +130,12 @@ class WP_Custom_Category extends WP_List_Table
         $table_name = $wpdb->prefix . $set_name_pj . "category";
 
         if ('delete' === $this->current_action()) {
-            $ids = isset($_REQUEST['id']) ? $_REQUEST['id'] : array();
+            $ids = isset ($_REQUEST['id']) ? $_REQUEST['id'] : array();
 
             if (is_array($ids))
                 $ids = implode(',', $ids);
 
-            if (!empty($ids)) {
+            if (!empty ($ids)) {
                 $wpdb->query("DELETE FROM $table_name WHERE id IN($ids)");
             }
         }
@@ -168,11 +168,11 @@ class WP_Custom_Category extends WP_List_Table
         $total_items = $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
 
         // Prepare Query Params, As Usual Page, Order By and Order Direction
-        $paged = isset($_REQUEST['paged']) ? max(0, intval($_REQUEST['paged']) - 1) : 0;
-        $orderby = (isset($_REQUEST['orderby']) && in_array($_REQUEST['orderby'], array_keys($this->get_sortable_columns()))) ? $_REQUEST['orderby'] : 'id';
-        $order = (isset($_REQUEST['order']) && in_array($_REQUEST['order'], array('asc', 'desc'))) ? $_REQUEST['order'] : 'desc';
+        $paged = isset ($_REQUEST['paged']) ? max(0, intval($_REQUEST['paged']) - 1) : 0;
+        $orderby = (isset ($_REQUEST['orderby']) && in_array($_REQUEST['orderby'], array_keys($this->get_sortable_columns()))) ? $_REQUEST['orderby'] : 'id';
+        $order = (isset ($_REQUEST['order']) && in_array($_REQUEST['order'], array('asc', 'desc'))) ? $_REQUEST['order'] : 'desc';
 
-        if (isset($_REQUEST['s']) && $_REQUEST['s'] != '') {
+        if (isset ($_REQUEST['s']) && $_REQUEST['s'] != '') {
             $this->items = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name WHERE `id` = '" . $_REQUEST['s'] . "' ORDER BY $orderby $order LIMIT %d OFFSET %d", $per_page, $paged * $per_page), ARRAY_A);
         } else {
             $this->items = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_name ORDER BY $orderby $order LIMIT %d OFFSET %d", $per_page, $paged * $per_page), ARRAY_A);
@@ -192,6 +192,37 @@ class WP_Custom_Category extends WP_List_Table
 
 function WP_Form_Category()
 {
+    // $obj = new WP_Custom_Category();
+    // $obj->prepare_items();
+    // // ob_start();
+    //      ?>
+
+    <div class="wrap">
+        <h2 class="wp-heading-inline">
+            <?php _e('Danh Sách Thể Loại', 'category') ?>
+            <a class="page-title-action" data-id="" data-toggle="modal" data-target="#modal-create-category" href="#">Thêm
+                Mới</a>
+            <!-- <a class="page-title-action" href="<?php // echo admin_url('admin.php?page=create_category')         ?>">Thêm Mới</a> -->
+        </h2>
+        <form id="" method="GET" enctype="multipart/form-data">
+            <input type="hidden" name="page" value="<?php // echo $_REQUEST['page'];      ?>">
+            <div id="wp-list-table-category-container">
+                <?php // $obj->display();      ?>
+            </div>
+        </form>
+    </div>
+    <?php
+    // WP_Modal_Category();
+    // // $table_html = ob_get_clean();
+    // // echo $table_html;
+
+
+    // // die();
+
+}
+
+function reload_wp_list_table_category_callback()
+{
     $obj = new WP_Custom_Category();
     $obj->prepare_items();
     // ob_start();
@@ -202,7 +233,7 @@ function WP_Form_Category()
             <?php _e('Danh Sách Thể Loại', 'category') ?>
             <a class="page-title-action" data-id="" data-toggle="modal" data-target="#modal-create-category" href="#">Thêm
                 Mới</a>
-            <!-- <a class="page-title-action" href="<?php // echo admin_url('admin.php?page=create_category')    ?>">Thêm Mới</a> -->
+            <!-- <a class="page-title-action" href="<?php // echo admin_url('admin.php?page=create_category');  ?>">Thêm Mới</a> -->
         </h2>
         <form id="" method="GET" enctype="multipart/form-data">
             <input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>">
@@ -213,19 +244,14 @@ function WP_Form_Category()
     </div>
     <?php
     WP_Modal_Category();
-
     // $table_html = ob_get_clean();
     // echo $table_html;
 
 
-    // die();
-
+    // wp_die();
 }
 
-function reload_wp_list_table_category_callback() {
-    
-}
-
+add_action('wp_ajax_my_ajax_action', 'reload_wp_list_table_category_callback');
 
 function WP_Modal_Category()
 {
@@ -238,7 +264,7 @@ function WP_Modal_Category()
     <div class="modal fade" id="modal-create-category" tabindex="-1" aria-labelledby="ex-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="<?php // echo admin_url('admin.php?page=category');     ?>" method="POST"
+                <form action="<?php // echo admin_url('admin.php?page=category');          ?>" method="POST"
                     class="form form-modal" enctype="multipart/form-data" id="form-create-category">
                     <div class="modal-header">
                         <h5 class="modal-title">Tạo Mới</h5>
@@ -336,7 +362,7 @@ function WP_Modal_Category()
 
                         $.ajax({
                             type: "POST",
-                            url: "<?php echo plugin_dir_url(__FILE__) . 'controller/CategoryController.php' // admin_url('../admin/controller/CategoryController.php')    ?>",
+                            url: "<?php echo plugin_dir_url(__FILE__) . 'controller/CategoryController.php' // admin_url('../admin/controller/CategoryController.php')         ?>",
                             data: {
                                 category: category_name_value,
                                 content: category_content_value,
@@ -351,7 +377,10 @@ function WP_Modal_Category()
                                 jQuery("#form-create-category")[0].reset();
 
                                 // Load WP List Table
-                                load_table_category();
+                                // load_table_category();
+                                
+                                // Load Page
+                                location.reload();
                             },
                         });
                     }
@@ -366,4 +395,6 @@ function WP_Modal_Category()
     <?php
 }
 
-WP_Form_Category();
+// WP_Form_Category();
+
+reload_wp_list_table_category_callback();
