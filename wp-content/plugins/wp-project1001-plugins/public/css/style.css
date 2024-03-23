@@ -138,3 +138,9 @@ textarea {
     align-items: center;
     justify-content: space-between;
 } */
+
+.btn-wp-list-table-action,
+.btn-wp-list-table-action:hover {
+    padding: 0.25rem 0.475rem !important;
+    font-size: 0.75rem !important;
+}

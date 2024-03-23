@@ -62,9 +62,23 @@ class WP_Custom_Category extends WP_List_Table
     public function column_id($item)
     {
         $action = array(
-            'delete' => sprintf(''),
-            'update' => sprintf(''),
-            'detail' => sprintf('')
+            'update' => sprintf('
+                <a class="btn btn-wp-list-table-action btn-info text-white" data-id="%s" id="btn-update-category">
+                    <i class="bx bx-edit-alt"></i>
+                </a>
+            ', $item['id']),
+
+            'delete' => sprintf('
+                <a class="btn btn-wp-list-table-action btn-danger text-white" data-id="%s" id="btn-delete-category">
+                    <i class="bx bx-trash"></i>
+                </a>
+            ', $item['id']),
+
+            'detail' => sprintf('
+                <a class="btn btn-wp-list-table-action btn-warning text-white" data-id="%s" id="btn-detail-category">
+                    <i class="bx bx-detail"></i>
+                </a>
+            ', $item['id'])
         );
 
         return sprintf('%s %s', $item["id"], $this->row_actions($action));
@@ -195,19 +209,19 @@ function WP_Form_Category()
     // $obj = new WP_Custom_Category();
     // $obj->prepare_items();
     // // ob_start();
-    //      ?>
+    //          ?>
 
     <div class="wrap">
         <h2 class="wp-heading-inline">
             <?php _e('Danh Sách Thể Loại', 'category') ?>
             <a class="page-title-action" data-id="" data-toggle="modal" data-target="#modal-create-category" href="#">Thêm
                 Mới</a>
-            <!-- <a class="page-title-action" href="<?php // echo admin_url('admin.php?page=create_category')         ?>">Thêm Mới</a> -->
+            <!-- <a class="page-title-action" href="<?php // echo admin_url('admin.php?page=create_category')             ?>">Thêm Mới</a> -->
         </h2>
         <form id="" method="GET" enctype="multipart/form-data">
-            <input type="hidden" name="page" value="<?php // echo $_REQUEST['page'];      ?>">
+            <input type="hidden" name="page" value="<?php // echo $_REQUEST['page'];          ?>">
             <div id="wp-list-table-category-container">
-                <?php // $obj->display();      ?>
+                <?php // $obj->display();          ?>
             </div>
         </form>
     </div>
@@ -233,7 +247,7 @@ function reload_wp_list_table_category_callback()
             <?php _e('Danh Sách Thể Loại', 'category') ?>
             <a class="page-title-action" data-id="" data-toggle="modal" data-target="#modal-create-category" href="#">Thêm
                 Mới</a>
-            <!-- <a class="page-title-action" href="<?php // echo admin_url('admin.php?page=create_category');  ?>">Thêm Mới</a> -->
+            <!-- <a class="page-title-action" href="<?php // echo admin_url('admin.php?page=create_category');      ?>">Thêm Mới</a> -->
         </h2>
         <form id="" method="GET" enctype="multipart/form-data">
             <input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>">
@@ -251,7 +265,7 @@ function reload_wp_list_table_category_callback()
     // wp_die();
 }
 
-add_action('wp_ajax_my_ajax_action', 'reload_wp_list_table_category_callback');
+// add_action('wp_ajax_my_ajax_action', 'reload_wp_list_table_category_callback');
 
 function WP_Modal_Category()
 {
@@ -264,7 +278,7 @@ function WP_Modal_Category()
     <div class="modal fade" id="modal-create-category" tabindex="-1" aria-labelledby="ex-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="<?php // echo admin_url('admin.php?page=category');          ?>" method="POST"
+                <form action="<?php // echo admin_url('admin.php?page=category');              ?>" method="POST"
                     class="form form-modal" enctype="multipart/form-data" id="form-create-category">
                     <div class="modal-header">
                         <h5 class="modal-title">Tạo Mới</h5>
@@ -295,6 +309,33 @@ function WP_Modal_Category()
             </div>
         </div>
     </div>
+
+
+    <!-- Update Modal -->
+    <div class="modal fade" id="modal-update-category" tabindex="-1" aria-labelledby="ex-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="<?php // echo admin_url('admin.php?page=category');              ?>" method="POST"
+                    class="form form-modal" enctype="multipart/form-data" id="form-update-category">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cập Nhật</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="bx bx-x"></i>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary" id="submit-update-category">Lưu Thay Đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <?php
 
     ?>
@@ -362,7 +403,7 @@ function WP_Modal_Category()
 
                         $.ajax({
                             type: "POST",
-                            url: "<?php echo plugin_dir_url(__FILE__) . 'controller/CategoryController.php' // admin_url('../admin/controller/CategoryController.php')         ?>",
+                            url: "<?php echo plugin_dir_url(__FILE__) . 'controller/CategoryController.php' // admin_url('../admin/controller/CategoryController.php')             ?>",
                             data: {
                                 category: category_name_value,
                                 content: category_content_value,
@@ -378,13 +419,25 @@ function WP_Modal_Category()
 
                                 // Load WP List Table
                                 // load_table_category();
-                                
+
                                 // Load Page
                                 location.reload();
                             },
                         });
                     }
                 });
+
+                // Update Form
+                $("#wp-list-table-category-container").on("click", "#btn-update-category", function (e) {
+                    var data_id = $(this).data("id");
+
+                    // Open Modal
+                    jQuery("#modal-update-category").modal("show");
+
+                    // Find Id
+                    
+                });
+                // Delete Form
             }
 
             modal_category();
