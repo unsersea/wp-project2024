@@ -214,7 +214,7 @@ function reload_wp_list_table_category_callback()
             <?php _e('Danh Sách Thể Loại', 'category') ?>
             <a class="page-title-action" data-id="" data-toggle="modal" data-target="#modal-create-category" href="#">Thêm
                 Mới</a>
-            <!-- <a class="page-title-action" href="<?php // echo admin_url('admin.php?page=create_category');             ?>">Thêm Mới</a> -->
+            <!-- <a class="page-title-action" href="<?php // echo admin_url('admin.php?page=create_category');               ?>">Thêm Mới</a> -->
         </h2>
         <form id="" method="GET" enctype="multipart/form-data">
             <input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>">
@@ -243,7 +243,7 @@ function WP_Modal_Category()
     <div class="modal fade" id="modal-create-category" tabindex="-1" aria-labelledby="ex-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="<?php // echo admin_url('admin.php?page=category');                     ?>" method="POST"
+                <form action="<?php // echo admin_url('admin.php?page=category');                       ?>" method="POST"
                     class="form form-modal" enctype="multipart/form-data" id="form-create-category">
                     <div class="modal-header">
                         <h5 class="modal-title">Tạo Mới</h5>
@@ -279,7 +279,7 @@ function WP_Modal_Category()
     <div class="modal fade" id="modal-update-category" tabindex="-1" aria-labelledby="ex-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="<?php // echo admin_url('admin.php?page=category');                     ?>" method="POST"
+                <form action="<?php // echo admin_url('admin.php?page=category');                       ?>" method="POST"
                     class="form form-modal" enctype="multipart/form-data" id="form-update-category">
                     <div class="modal-header">
                         <h5 class="modal-title">Cập Nhật</h5>
@@ -290,6 +290,10 @@ function WP_Modal_Category()
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div class="field-modal d-none">
+                            <label class="form-label">Mã</label>
+                            <input type="text" name="category-id" class="form-control-dsg" id="single-update-category-id">
+                        </div>
                         <div class="field-modal">
                             <label class="form-label">Thể Loại</label>
                             <input type="text" name="category-name" class="form-control-dsg" placeholder="Nhập thể loại"
@@ -379,7 +383,7 @@ function WP_Modal_Category()
 
                         $.ajax({
                             type: "POST",
-                            url: "<?php echo plugin_dir_url(__FILE__) . 'controller/CategoryController.php' // admin_url('../admin/controller/CategoryController.php')                    ?>",
+                            url: "<?php echo plugin_dir_url(__FILE__) . 'controller/CategoryController.php' // admin_url('../admin/controller/CategoryController.php')                      ?>",
                             data: {
                                 category: category_name_value,
                                 content: category_content_value,
@@ -422,6 +426,7 @@ function WP_Modal_Category()
                             jQuery("#modal-update-category").modal("show");
 
                             // Add Data in Input Value
+                            $("#single-update-category-id").val(response.id);
                             $("#single-update-category-name").val(response.name_category);
                             $("#single-update-category-content").val(response.content);
 
@@ -450,6 +455,7 @@ function WP_Modal_Category()
                                 }
 
                                 // console.log("Form values:", values);
+                                var category_id = values["category-id"];
                                 var category_name_value = values["category-name"];
                                 var category_content_value = values["category-content"];
 
@@ -467,8 +473,9 @@ function WP_Modal_Category()
 
                                     $.ajax({
                                         type: "POST",
-                                        url: "<?php echo plugin_dir_url(__FILE__) . 'controller/CategoryController.php' // admin_url('../admin/controller/CategoryController.php')                    ?>",
+                                        url: "<?php echo plugin_dir_url(__FILE__) . 'controller/CategoryController.php' // admin_url('../admin/controller/CategoryController.php')                      ?>",
                                         data: {
+                                            id: category_id,
                                             category: category_name_value,
                                             content: category_content_value,
                                             action: "submit-update-category",
@@ -477,15 +484,15 @@ function WP_Modal_Category()
                                         // contentType: false,
                                         // processData: false,
                                         success: function (data) {
-                                            // jQuery("#modal-update-category").modal('hide');
+                                            jQuery("#modal-update-category").modal('hide');
 
-                                            // jQuery("#form-update-category")[0].reset();
+                                            jQuery("#form-update-category")[0].reset();
 
                                             // Load WP List Table
                                             // load_table_category();
 
                                             // Load Page
-                                            // location.reload();
+                                            location.reload();
                                         },
                                     });
                                 }

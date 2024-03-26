@@ -39,6 +39,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Update
         if($action == "submit-update-category") {
 
+            $id = $_REQUEST["id"];
+
+            $category = $_REQUEST["category"];
+            $content = $_REQUEST["content"];
+
+            global $wpdb;
+
+            $set_name_pj = "pj1001_";
+
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+            $table_name = $wpdb->prefix . $set_name_pj . "category";
+
+            $wpdb->update($table_name, array(
+                'name_category' => $category,
+                'content' => $content,
+            ), array('id' => $id));
         }
 
         // Find
